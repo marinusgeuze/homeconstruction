@@ -1,0 +1,12 @@
+Vragen
+======
+* Wordt een Aggregrate niet snel erg groot? Ja ja, is niet bedoeling, maar zie je dat toch niet snel gebeuren?
+* Kunnen we Aggregates zelf ook in Kotlin maken?
+
+TO DO
+=====
+* Kijken part 2 van video
+* AggregateRoot versus Aggregate versus Entity versus Value Objects (kijk naar alle DDD types)
+* Kijken of Aggregates uit DB kunnen halen ipv Event Store (use repository element op Aggregate annotation)
+* Asynchrone commandbus versus synchrone commandbus (Unit of Work?)
+* Kijken of Aggregates zelf in Kotlin kunnen (ook weer met een Root, Entity en Value Object)

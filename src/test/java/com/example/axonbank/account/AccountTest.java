@@ -40,4 +40,13 @@ public class AccountTest {
                 .expectNoEvents()
                 .expectException(OverdraftLimitExceededException.class);
     }
+
+    @Test
+    public void testWithdrawTwice() {
+        fixture.given(new AccountCreatedEvent(ACCOUNT_ID, 1000),
+                new MoneyWithdrawnEvent(ACCOUNT_ID, 999, -999))
+                .when(new WithdrawMoneyCommand(ACCOUNT_ID, 2))
+                .expectNoEvents()
+                .expectException(OverdraftLimitExceededException.class);
+    }
 }
