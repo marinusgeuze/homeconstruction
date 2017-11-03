@@ -1,22 +1,26 @@
 package com.example.axonbank.account;
 
-import com.example.axonbank.coreapi.AccountCreatedEvent;
-import com.example.axonbank.coreapi.CreateAccountCommand;
-import com.example.axonbank.coreapi.MoneyWithdrawnEvent;
-import com.example.axonbank.coreapi.WithdrawMoneyCommand;
+import com.example.axonbank.coreapi.*;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.spring.stereotype.Aggregate;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
+//@Aggregate(repository = "jpaAccountRepository")
+@Aggregate
+//@Entity
 @NoArgsConstructor
 public class Account {
 
+    //@Id
     @AggregateIdentifier
     private String accountId;
+    //@Basic
     private int balance;
+    //@Basic
     private int overdraftLimit;
 
     @CommandHandler
@@ -28,12 +32,16 @@ public class Account {
     @CommandHandler
     public void handle(WithdrawMoneyCommand command) throws OverdraftLimitExceededException {
 
-        if(balance + overdraftLimit >= command.getAmount()) {
-            apply(new MoneyWithdrawnEvent(accountId, command.getAmount(), balance - command.getAmount()));
-        } else {
+        if(balance + overdraftLimit < command.getAmount()) {
             throw new OverdraftLimitExceededException();
         }
 
+        apply(new MoneyWithdrawnEvent(accountId, command.getTransactionId(), command.getAmount(), balance - command.getAmount()));
+    }
+
+    @CommandHandler
+    public void handle(DepositMoneyCommand cmd) {
+        apply(new MoneyDepositedEvent(accountId, cmd.getTransactionId(), cmd.getAmount(), balance + cmd.getAmount()));
     }
 
     @EventSourcingHandler
