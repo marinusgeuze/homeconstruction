@@ -5,7 +5,7 @@ Vragen
 
 TO DO
 =====
-* Kijken part 2 van video
+* Kijken part 3 van video
 * AggregateRoot versus Aggregate versus Entity versus Value Objects (kijk naar alle DDD types)
 * Kijken of Aggregates uit DB kunnen halen ipv Event Store (use repository element op Aggregate annotation)
 * Asynchrone commandbus versus synchrone commandbus (Unit of Work?)
