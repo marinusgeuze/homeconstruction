@@ -1,6 +1,6 @@
 package com.homeconstruction;
 
-import com.homeconstruction.project.Project;
+import com.homeconstruction.project.domain.Project;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.model.GenericJpaRepository;
 import org.axonframework.commandhandling.model.Repository;

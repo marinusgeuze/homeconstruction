@@ -1,5 +1,6 @@
-package com.homeconstruction.project;
+package com.homeconstruction.project.command;
 
+import com.homeconstruction.project.api.CreateProjectCommand;
 import org.axonframework.commandhandling.callbacks.LoggingCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,30 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.UUID;
 
-@Controller()
-public class ProjectController {
+@Controller
+public class ProjectCommandController {
 
     private final CommandGateway commandGateway;
-    private ProjectQueryRepository projectQueryRepository;
 
     @Autowired
-    public ProjectController(CommandGateway commandGateway, ProjectQueryRepository projectQueryRepository) {
+    public ProjectCommandController(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
-        this.projectQueryRepository = projectQueryRepository;
-    }
-
-    @RequestMapping("/project")
-    @ResponseBody
-    public Iterable<Project> findAll() {
-
-        return projectQueryRepository.findAll();
-    }
-
-    @RequestMapping("/project/{id}")
-    @ResponseBody
-    public Project find(@PathVariable("id") String id) {
-
-        return projectQueryRepository.findOne(id);
     }
 
     @RequestMapping(value = "/project/create/{name}", method = RequestMethod.GET)
