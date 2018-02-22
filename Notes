@@ -1,0 +1,17 @@
+Vragen
+======
+* Wordt een Aggregrate niet snel erg groot? Ja ja, is niet bedoeling, maar zie je dat toch niet snel gebeuren?
+* Je doet dus NOOIT data updates in command afhandeling?
+
+Info
+====
+docker run -p 3306:3306 --name homeconstruction -e MYSQL_DATABASE=homeconstruction -e MYSQL_ROOT_PASSWORD=build -e MYSQL_USER=build -e MYSQL_PASSWORD=build -d mysql:latest
+
+TO DO
+=====
+* AggregateRoot versus Aggregate versus Entity versus Value Objects (kijk naar alle DDD types)
+* Asynchrone commandbus versus synchrone commandbus (Unit of Work?)
+* Deploy in cloud mbv Continuous Deployment pipeline
+* Meerdere modules (met duidelijke boundaries)
+* Rolling Upgrades
+* Alles in Kotlin

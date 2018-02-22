@@ -6,7 +6,7 @@ import com.homeconstruction.project.api.exceptions.ProjectNameIsRequiredExceptio
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
-import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import javax.persistence.Entity;
@@ -34,7 +34,7 @@ public class Project {
         apply(new ProjectCreatedEvent(command.getId(), name));
     }
 
-    @EventSourcingHandler
+    @EventHandler
     public void on(ProjectCreatedEvent event) {
 
         this.id = event.getId();
