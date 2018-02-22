@@ -4,13 +4,12 @@ import com.homeconstruction.project.api.CreateProjectCommand;
 import org.axonframework.commandhandling.callbacks.LoggingCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.UUID;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 public class ProjectCommandController {
@@ -22,13 +21,11 @@ public class ProjectCommandController {
         this.commandGateway = commandGateway;
     }
 
-    @RequestMapping(value = "/project/create/{name}", method = RequestMethod.GET)
-    @ResponseBody
-    public String create(@PathVariable String name) {
+    @RequestMapping(value = "/project", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createProjectCommand(@RequestBody CreateProjectCommand createProjectCommand) {
 
-        String id = UUID.randomUUID().toString();
-        commandGateway.send(new CreateProjectCommand(id, name), LoggingCallback.INSTANCE);
-
-        return id;
+        //TODO: Change this to async implementation
+        commandGateway.send(createProjectCommand, LoggingCallback.INSTANCE);
     }
 }

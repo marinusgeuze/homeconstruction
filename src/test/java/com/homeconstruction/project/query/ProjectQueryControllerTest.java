@@ -41,7 +41,7 @@ public class ProjectQueryControllerTest {
     @Test
     public void findAll() throws Exception {
 
-        List<ProjectProjection> projects = new ArrayList<ProjectProjection>();
+        List<ProjectProjection> projects = new ArrayList<>();
         ProjectProjection project1 = new ProjectProjectionTestImpl("1", "Test 1");
         projects.add(project1);
         ProjectProjection project2 = new ProjectProjectionTestImpl("2", "Test 2");
@@ -88,12 +88,14 @@ public class ProjectQueryControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    //NOTE: Mocking the ProjectProjection class results in 500 error,
+    //it seems that Mock MVC does not allow mocks to be returned by controller
     private class ProjectProjectionTestImpl implements ProjectProjection {
 
         private String id;
         private String name;
 
-        public ProjectProjectionTestImpl(String id, String name) {
+        ProjectProjectionTestImpl(String id, String name) {
             this.id = id;
             this.name = name;
         }

@@ -1,6 +1,6 @@
 package com.homeconstruction.project.query;
 
-import com.homeconstruction.ResourceNotFoundException;
+import com.homeconstruction.framework.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +29,6 @@ public class ProjectQueryController {
     public ProjectProjection find(@PathVariable("id") String id) {
 
         return projectQueryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException());
+                .orElseThrow(ResourceNotFoundException::new);
     }
 }

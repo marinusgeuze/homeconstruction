@@ -6,7 +6,7 @@ Vragen
 
 Info
 ====
-docker run -p 3306:3306 --name axonbank -e MYSQL_DATABASE=axonbank -e MYSQL_ROOT_PASSWORD=build -e MYSQL_USER=build -e MYSQL_PASSWORD=build -d mysql:latest
+docker run -p 3306:3306 --name axonbank -e MYSQL_DATABASE=axonbank -e MYSQL_ROOT_PASSWORD=build -e MYSQL_USER=build -e MYSQL_PASSWORD=build -d mysql:latest		
 
 TO DO
 =====

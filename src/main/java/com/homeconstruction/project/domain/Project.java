@@ -2,6 +2,7 @@ package com.homeconstruction.project.domain;
 
 import com.homeconstruction.project.api.CreateProjectCommand;
 import com.homeconstruction.project.api.ProjectCreatedEvent;
+import com.homeconstruction.project.api.exceptions.ProjectNameIsRequiredException;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
@@ -11,6 +12,7 @@ import org.axonframework.spring.stereotype.Aggregate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import static com.homeconstruction.framework.util.StringUtils.getStringValueIfSet;
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
 @Aggregate(repository = "projectCommandRepository")
@@ -24,11 +26,12 @@ public class Project {
     private String name;
 
     @CommandHandler
-    public Project(CreateProjectCommand command) {
+    public Project(CreateProjectCommand command) throws ProjectNameIsRequiredException {
 
-        //TODO: Validate if name already exists (create test first)
+        String name = getStringValueIfSet(command.getName()).orElseThrow(
+                ProjectNameIsRequiredException::new);
 
-        apply(new ProjectCreatedEvent(command.getId(), command.getName()));
+        apply(new ProjectCreatedEvent(command.getId(), name));
     }
 
     @EventSourcingHandler

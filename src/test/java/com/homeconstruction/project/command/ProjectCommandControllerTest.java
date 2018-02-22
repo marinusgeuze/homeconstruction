@@ -1,22 +1,59 @@
 package com.homeconstruction.project.command;
 
-import com.homeconstruction.project.query.ProjectQueryRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.homeconstruction.project.api.CreateProjectCommand;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ProjectCommandController.class, secure = false)
 public class ProjectCommandControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private ProjectQueryRepository projectQueryRepository;
+    private ObjectMapper objectMapper;
 
-    //TODO: Implement test
+    @MockBean
+    private CommandGateway commandGateway;
+
+    //TODO: Can this be done with @WebMvcTest on class level
+    @Before
+    public void setUp() throws Exception {
+
+        initMocks(this);
+
+        ProjectCommandController controller = new ProjectCommandController(commandGateway);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        objectMapper = new ObjectMapper();
+    }
+
+    @Test
+    public void create() throws Exception {
+
+        CreateProjectCommand createProjectCommand = new CreateProjectCommand("1", "Test 1");
+
+        when(commandGateway.send(createProjectCommand)).thenReturn(null);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+                "/project")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsBytes(createProjectCommand));
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isCreated());
+    }
 }

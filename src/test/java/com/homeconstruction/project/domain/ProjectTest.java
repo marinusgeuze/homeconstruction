@@ -1,12 +1,8 @@
 package com.homeconstruction.project.domain;
 
-import com.example.axonbank.coreapi.AccountCreatedEvent;
-import com.example.axonbank.coreapi.OverdraftLimitExceededException;
-import com.example.axonbank.coreapi.WithdrawMoneyCommand;
 import com.homeconstruction.project.api.CreateProjectCommand;
 import com.homeconstruction.project.api.ProjectCreatedEvent;
-import com.homeconstruction.project.api.ProjectNameAlreadyExistException;
-import com.homeconstruction.project.domain.Project;
+import com.homeconstruction.project.api.exceptions.ProjectNameIsRequiredException;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +22,7 @@ public class ProjectTest {
 
     @Test
     public void testCreateProject() throws Exception {
+
         fixture.givenNoPriorActivity()
                 .when(new CreateProjectCommand(PROJECT_ID, "Witte Bruggen"))
                 .expectEvents(new ProjectCreatedEvent(PROJECT_ID, "Witte Bruggen"));
@@ -33,10 +30,11 @@ public class ProjectTest {
 
     @Test
     public void testProjectNameAlreadyExist() throws Exception {
-        fixture.given(new CreateProjectCommand(UUID.randomUUID().toString(), "Test"))
-                .when(new CreateProjectCommand(UUID.randomUUID().toString(), "test "))
+
+        fixture.givenNoPriorActivity()
+                .when(new CreateProjectCommand(PROJECT_ID, "  "))
                 .expectNoEvents()
-                .expectException(ProjectNameAlreadyExistException.class);
+                .expectException(ProjectNameIsRequiredException.class);
     }
 
 }
