@@ -2,7 +2,7 @@ package com.homeconstruction.project.domain;
 
 import com.homeconstruction.project.api.CreateProjectCommand;
 import com.homeconstruction.project.api.ProjectCreatedEvent;
-import com.homeconstruction.project.api.exceptions.ProjectNameIsRequiredException;
+import com.homeconstruction.project.api.ProjectNameIsRequiredException;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;

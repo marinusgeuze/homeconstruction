@@ -2,7 +2,7 @@ package com.homeconstruction.project.domain;
 
 import com.homeconstruction.project.api.CreateProjectCommand;
 import com.homeconstruction.project.api.ProjectCreatedEvent;
-import com.homeconstruction.project.api.exceptions.ProjectNameIsRequiredException;
+import com.homeconstruction.project.api.ProjectNameIsRequiredException;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.junit.Before;
 import org.junit.Test;
