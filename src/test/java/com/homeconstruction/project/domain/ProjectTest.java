@@ -2,7 +2,7 @@ package com.homeconstruction.project.domain;
 
 import com.homeconstruction.project.api.CreateProjectCommand;
 import com.homeconstruction.project.api.ProjectCreatedEvent;
-import com.homeconstruction.project.api.ProjectNameIsRequiredException;
+import com.homeconstruction.project.api.ProjectName;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,17 +24,7 @@ public class ProjectTest {
     public void testCreateProject() throws Exception {
 
         fixture.givenNoPriorActivity()
-                .when(new CreateProjectCommand(PROJECT_ID, "Witte Bruggen"))
-                .expectEvents(new ProjectCreatedEvent(PROJECT_ID, "Witte Bruggen"));
+                .when(new CreateProjectCommand(PROJECT_ID, new ProjectName("Witte Bruggen")))
+                .expectEvents(new ProjectCreatedEvent(PROJECT_ID, new ProjectName("Witte Bruggen")));
     }
-
-    @Test
-    public void testProjectNameAlreadyExist() throws Exception {
-
-        fixture.givenNoPriorActivity()
-                .when(new CreateProjectCommand(PROJECT_ID, "  "))
-                .expectNoEvents()
-                .expectException(ProjectNameIsRequiredException.class);
-    }
-
 }

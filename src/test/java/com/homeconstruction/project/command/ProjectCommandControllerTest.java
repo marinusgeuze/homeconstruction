@@ -2,6 +2,7 @@ package com.homeconstruction.project.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homeconstruction.project.api.CreateProjectCommand;
+import com.homeconstruction.project.api.ProjectName;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class ProjectCommandControllerTest {
     @Test
     public void create() throws Exception {
 
-        CreateProjectCommand createProjectCommand = new CreateProjectCommand("1", "Test 1");
+        CreateProjectCommand createProjectCommand = new CreateProjectCommand("1", new ProjectName("Test 1"));
 
         when(commandGateway.send(createProjectCommand)).thenReturn(null);
 
