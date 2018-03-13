@@ -9,8 +9,12 @@ docker run -p 3306:3306 --name homeconstruction -e MYSQL_DATABASE=homeconstructi
 
 TO DO
 =====
+* Service laag toevoegen (vanuit test en controller)
+* Project naam uniek validatie
+* Create modules voor bounded contexts
 * AggregateRoot versus Aggregate versus Entity versus Value Objects (kijk naar alle DDD types)
 * Asynchrone commandbus versus synchrone commandbus (Unit of Work?)
+* Toon events of aggregate
 * Deploy in cloud mbv Continuous Deployment pipeline
 * Meerdere modules (met duidelijke boundaries)
 * Rolling Upgrades
