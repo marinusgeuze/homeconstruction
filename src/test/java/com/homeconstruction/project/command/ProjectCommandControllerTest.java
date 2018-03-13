@@ -1,8 +1,10 @@
 package com.homeconstruction.project.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.homeconstruction.project.api.InitiateProjectCommand;
+import com.homeconstruction.project.api.InitiateProject;
 import com.homeconstruction.project.api.ProjectName;
+import com.homeconstruction.project.api.ProjectReachedPercentage;
+import com.homeconstruction.project.api.ReachProjectTarget;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,16 +45,16 @@ public class ProjectCommandControllerTest {
     }
 
     @Test
-    public void create() throws Exception {
+    public void initiateProject() throws Exception {
 
-        InitiateProjectCommand initiateProjectCommand = new InitiateProjectCommand("1", new ProjectName("Test 1"));
+        InitiateProject initiateProject = new InitiateProject("1", new ProjectName("Test 1"));
 
-        when(commandGateway.send(initiateProjectCommand)).thenReturn(null);
+        when(commandGateway.send(initiateProject)).thenReturn(null);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
                 "/project")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsBytes(initiateProjectCommand));
+                .content(objectMapper.writeValueAsBytes(initiateProject));
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isCreated());

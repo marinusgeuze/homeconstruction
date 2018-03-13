@@ -1,6 +1,6 @@
 package com.homeconstruction.project.command;
 
-import com.homeconstruction.project.api.InitiateProjectCommand;
+import com.homeconstruction.project.api.InitiateProject;
 import org.axonframework.commandhandling.callbacks.LoggingCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class ProjectCommandController {
 
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void initiateProjectCommand(@RequestBody InitiateProjectCommand initiateProjectCommand) {
+    public void initiateProjectCommand(@RequestBody InitiateProject initiateProject) {
 
         //TODO: Change this to async implementation
-        commandGateway.send(initiateProjectCommand, LoggingCallback.INSTANCE);
+        commandGateway.send(initiateProject, LoggingCallback.INSTANCE);
     }
 }

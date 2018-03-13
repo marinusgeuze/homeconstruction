@@ -1,12 +1,11 @@
 package com.homeconstruction.project.domain;
 
-import com.homeconstruction.project.api.InitiateProjectCommand;
-import com.homeconstruction.project.api.ProjectInitiatedEvent;
-import com.homeconstruction.project.api.ProjectName;
+import com.homeconstruction.project.api.*;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class ProjectTest {
@@ -21,10 +20,34 @@ public class ProjectTest {
     }
 
     @Test
-    public void testCreateProject() throws Exception {
+    public void testInitiateProject() throws Exception {
 
+        ProjectName projectName = new ProjectName("Witte Bruggen");
         fixture.givenNoPriorActivity()
-                .when(new InitiateProjectCommand(PROJECT_ID, new ProjectName("Witte Bruggen")))
-                .expectEvents(new ProjectInitiatedEvent(PROJECT_ID, new ProjectName("Witte Bruggen")));
+                .when(new InitiateProject(PROJECT_ID, projectName))
+                .expectEvents(new ProjectInitiated(PROJECT_ID, projectName));
+    }
+
+    @Test
+    public void testReachProjectTarget() throws Exception {
+
+        ProjectReachedPercentage projectReachedPercentage = new ProjectReachedPercentage(70);
+        //TODO: Check why this does not work for Aggregate not using event sourcing. You still want to build the aggregate state
+        fixture.given(new ProjectInitiated(PROJECT_ID, new ProjectName("Witte Bruggen")))
+        //fixture.givenNoPriorActivity()
+                .when(new ReachProjectTarget(PROJECT_ID, projectReachedPercentage))
+                .expectEvents(new ProjectTargetReached(PROJECT_ID, projectReachedPercentage));
+    }
+
+    @Test
+    public void testStartProject() throws Exception {
+
+        LocalDate startDate = LocalDate.now();
+        //TODO: Check why this does not work for Aggregate not using event sourcing. You still want to build the aggregate state
+        fixture.given(new ProjectInitiated(PROJECT_ID, new ProjectName("Witte Bruggen")),
+                new ProjectTargetReached(PROJECT_ID, new ProjectReachedPercentage(70)))
+        //fixture.givenNoPriorActivity()
+                .when(new StartProject(PROJECT_ID, startDate))
+                .expectEvents(new ProjectStarted(PROJECT_ID, startDate));
     }
 }
