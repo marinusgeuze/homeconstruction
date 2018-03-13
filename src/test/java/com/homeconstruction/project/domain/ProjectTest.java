@@ -32,9 +32,7 @@ public class ProjectTest {
     public void testReachProjectTarget() throws Exception {
 
         ProjectReachedPercentage projectReachedPercentage = new ProjectReachedPercentage(70);
-        //TODO: Check why this does not work for Aggregate not using event sourcing. You still want to build the aggregate state
         fixture.given(new ProjectInitiated(PROJECT_ID, new ProjectName("Witte Bruggen")))
-        //fixture.givenNoPriorActivity()
                 .when(new ReachProjectTarget(PROJECT_ID, projectReachedPercentage))
                 .expectEvents(new ProjectTargetReached(PROJECT_ID, projectReachedPercentage));
     }
@@ -43,10 +41,8 @@ public class ProjectTest {
     public void testStartProject() throws Exception {
 
         LocalDate startDate = LocalDate.now();
-        //TODO: Check why this does not work for Aggregate not using event sourcing. You still want to build the aggregate state
         fixture.given(new ProjectInitiated(PROJECT_ID, new ProjectName("Witte Bruggen")),
                 new ProjectTargetReached(PROJECT_ID, new ProjectReachedPercentage(70)))
-        //fixture.givenNoPriorActivity()
                 .when(new StartProject(PROJECT_ID, startDate))
                 .expectEvents(new ProjectStarted(PROJECT_ID, startDate));
     }

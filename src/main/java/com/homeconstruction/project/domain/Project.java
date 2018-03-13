@@ -4,25 +4,22 @@ import com.homeconstruction.project.api.*;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
-import org.axonframework.commandhandling.model.AggregateRoot;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import java.time.LocalDate;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
-//@Aggregate(repository = "projectCommandRepository")
-//@Entity
-@AggregateRoot
+@Aggregate(repository = "projectCommandRepository")
+@Entity
 @NoArgsConstructor
 public class Project {
 
-    //@Id
+    @Id
     @AggregateIdentifier
     private String id;
     private ProjectName name;
@@ -36,7 +33,7 @@ public class Project {
         apply(new ProjectInitiated(command.getId(), command.getName()));
     }
 
-    @EventSourcingHandler
+    @EventHandler
     public void on(ProjectInitiated event) {
 
         this.id = event.getId();
@@ -44,12 +41,12 @@ public class Project {
     }
 
     @CommandHandler
-    public Project(ReachProjectTarget command) {
+    public void handle(ReachProjectTarget command) {
 
         apply(new ProjectTargetReached(command.getId(), command.getPercentage()));
     }
 
-    @EventSourcingHandler
+    @EventHandler
     public void on(ProjectTargetReached event) {
 
         this.targetReached = true;
@@ -57,12 +54,12 @@ public class Project {
     }
 
     @CommandHandler
-    public Project(StartProject command) {
+    public void handle(StartProject command) {
 
         apply(new ProjectStarted(command.getId(), command.getStartDate()));
     }
 
-    @EventSourcingHandler
+    @EventHandler
     public void on(ProjectStarted event) {
 
         this.startDate = event.getStartDate();
