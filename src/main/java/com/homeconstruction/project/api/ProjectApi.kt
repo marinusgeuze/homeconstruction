@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue
 import org.axonframework.commandhandling.TargetAggregateIdentifier
 import javax.persistence.Embeddable
 
-class CreateProjectCommand(@TargetAggregateIdentifier val id: String, val name: ProjectName)
-class ProjectCreatedEvent(val id: String, val name: ProjectName)
+class InitiateProjectCommand(@TargetAggregateIdentifier val id: String, val name: ProjectName)
+class ProjectInitiatedEvent(val id: String, val name: ProjectName)
 
 @Embeddable
 data class ProjectName @JsonCreator(mode = JsonCreator.Mode.DELEGATING) constructor(@get:JsonValue val name: String) {

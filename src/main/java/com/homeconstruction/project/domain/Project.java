@@ -1,7 +1,7 @@
 package com.homeconstruction.project.domain;
 
-import com.homeconstruction.project.api.CreateProjectCommand;
-import com.homeconstruction.project.api.ProjectCreatedEvent;
+import com.homeconstruction.project.api.InitiateProjectCommand;
+import com.homeconstruction.project.api.ProjectInitiatedEvent;
 import com.homeconstruction.project.api.ProjectName;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
@@ -25,13 +25,13 @@ public class Project {
     private ProjectName name;
 
     @CommandHandler
-    public Project(CreateProjectCommand command) {
+    public Project(InitiateProjectCommand command) {
 
-        apply(new ProjectCreatedEvent(command.getId(), command.getName()));
+        apply(new ProjectInitiatedEvent(command.getId(), command.getName()));
     }
 
     @EventHandler
-    public void on(ProjectCreatedEvent event) {
+    public void on(ProjectInitiatedEvent event) {
 
         this.id = event.getId();
         this.name = event.getName();

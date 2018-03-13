@@ -1,7 +1,7 @@
 package com.homeconstruction.project.domain;
 
-import com.homeconstruction.project.api.CreateProjectCommand;
-import com.homeconstruction.project.api.ProjectCreatedEvent;
+import com.homeconstruction.project.api.InitiateProjectCommand;
+import com.homeconstruction.project.api.ProjectInitiatedEvent;
 import com.homeconstruction.project.api.ProjectName;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class ProjectTest {
     public void testCreateProject() throws Exception {
 
         fixture.givenNoPriorActivity()
-                .when(new CreateProjectCommand(PROJECT_ID, new ProjectName("Witte Bruggen")))
-                .expectEvents(new ProjectCreatedEvent(PROJECT_ID, new ProjectName("Witte Bruggen")));
+                .when(new InitiateProjectCommand(PROJECT_ID, new ProjectName("Witte Bruggen")))
+                .expectEvents(new ProjectInitiatedEvent(PROJECT_ID, new ProjectName("Witte Bruggen")));
     }
 }
