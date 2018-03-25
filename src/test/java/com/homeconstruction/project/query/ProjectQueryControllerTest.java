@@ -25,7 +25,7 @@ public class ProjectQueryControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ProjectQueryRepository projectQueryRepository;
+    private ProjectQueryService projectQueryService;
 
     //TODO: Can this be done with @WebMvcTest on class level
     @Before
@@ -33,7 +33,7 @@ public class ProjectQueryControllerTest {
 
         initMocks(this);
 
-        ProjectQueryController controller = new ProjectQueryController(projectQueryRepository);
+        ProjectQueryController controller = new ProjectQueryController(projectQueryService);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
@@ -42,12 +42,16 @@ public class ProjectQueryControllerTest {
     public void findAll() throws Exception {
 
         List<ProjectProjection> projects = new ArrayList<>();
-        ProjectProjection project1 = new ProjectProjectionTestImpl("1", "Test 1");
+        ProjectProjection project1 = new ProjectProjection();
+        project1.setId("1");
+        project1.setName("Test 1");
         projects.add(project1);
-        ProjectProjection project2 = new ProjectProjectionTestImpl("2", "Test 2");
+        ProjectProjection project2 = new ProjectProjection();
+        project1.setId("2");
+        project1.setName("Test 2");
         projects.add(project2);
 
-        when(projectQueryRepository.findAll()).thenReturn(projects);
+        when(projectQueryService.findAll()).thenReturn(projects);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/project");
@@ -63,9 +67,11 @@ public class ProjectQueryControllerTest {
     @Test
     public void findFound() throws Exception {
 
-        ProjectProjection project1 = new ProjectProjectionTestImpl("1", "Test 1");
+        ProjectProjection project1 = new ProjectProjection();
+        project1.setId("1");
+        project1.setName("Test 1");
 
-        when(projectQueryRepository.findById("1")).thenReturn(Optional.of(project1));
+        when(projectQueryService.findById("1")).thenReturn(Optional.of(project1));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/project/1");
@@ -79,35 +85,12 @@ public class ProjectQueryControllerTest {
     @Test
     public void findNotFound() throws Exception {
 
-        when(projectQueryRepository.findById("1")).thenReturn(Optional.empty());
+        when(projectQueryService.findById("1")).thenReturn(Optional.empty());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/project/1");
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isNotFound());
-    }
-
-    //NOTE: Mocking the ProjectProjection class results in 500 error,
-    //it seems that Mock MVC does not allow mocks to be returned by controller
-    private class ProjectProjectionTestImpl implements ProjectProjection {
-
-        private String id;
-        private String name;
-
-        ProjectProjectionTestImpl(String id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        @Override
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
     }
 }

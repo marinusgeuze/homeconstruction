@@ -3,9 +3,6 @@ package com.homeconstruction.project.command;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homeconstruction.project.api.InitiateProject;
 import com.homeconstruction.project.api.ProjectName;
-import com.homeconstruction.project.api.ProjectReachedPercentage;
-import com.homeconstruction.project.api.ReachProjectTarget;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +14,6 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +25,7 @@ public class ProjectCommandControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private CommandGateway commandGateway;
+    private ProjectCommandService projectCommandService;
 
     //TODO: Can this be done with @WebMvcTest on class level
     @Before
@@ -37,7 +33,7 @@ public class ProjectCommandControllerTest {
 
         initMocks(this);
 
-        ProjectCommandController controller = new ProjectCommandController(commandGateway);
+        ProjectCommandController controller = new ProjectCommandController(projectCommandService);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
@@ -48,8 +44,6 @@ public class ProjectCommandControllerTest {
     public void initiateProject() throws Exception {
 
         InitiateProject initiateProject = new InitiateProject("1", new ProjectName("Test 1"));
-
-        when(commandGateway.send(initiateProject)).thenReturn(null);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
                 "/project")

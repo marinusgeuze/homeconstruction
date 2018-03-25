@@ -8,10 +8,10 @@ import javax.persistence.Embeddable
 
 class InitiateProject(@TargetAggregateIdentifier val id: String, val name: ProjectName)
 class ProjectInitiated(val id: String, val name: ProjectName)
-class ReachProjectTarget(@TargetAggregateIdentifier val id: String, val percentage: ProjectReachedPercentage)
-class ProjectTargetReached(val id: String, val percentage: ProjectReachedPercentage)
-class StartProject(@TargetAggregateIdentifier val id: String, val startDate: LocalDate)
-class ProjectStarted(val id: String, val startDate: LocalDate)
+class ReachProjectTarget(@TargetAggregateIdentifier val id: String, val percentage: MinimumAmountOfBuyersReachedPercentage, val reachedDate: LocalDate)
+class ProjectTargetReached(val id: String, val percentage: MinimumAmountOfBuyersReachedPercentage, val reachedDate: LocalDate)
+class StartConstructionOnSite(@TargetAggregateIdentifier val id: String, val startDate: LocalDate)
+class ConstructionOnSiteStarted(val id: String, val startDate: LocalDate)
 
 @Embeddable
 data class ProjectName
@@ -28,15 +28,15 @@ constructor(@get:JsonValue val name: String) {
 }
 
 @Embeddable
-data class ProjectReachedPercentage
+data class MinimumAmountOfBuyersReachedPercentage
 @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-constructor(@get:JsonValue val percentage: Int) {
+constructor(@get:JsonValue val minimumAmountOfBuyersReachedPercentage: Int?) {
 
     init {
-        if (percentage !in 1..100) {
+        if (minimumAmountOfBuyersReachedPercentage !in 1..100) {
             throw IllegalArgumentException("Project reached percentage must be between 1 and 100")
         }
     }
 
-    override fun toString(): String = percentage.toString()
+    override fun toString(): String = minimumAmountOfBuyersReachedPercentage.toString()
 }

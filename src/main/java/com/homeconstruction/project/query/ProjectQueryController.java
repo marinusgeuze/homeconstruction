@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProjectQueryController {
 
-    private ProjectQueryRepository projectQueryRepository;
+    private ProjectQueryService projectQueryService;
 
     @Autowired
-    public ProjectQueryController(ProjectQueryRepository projectQueryRepository) {
-        this.projectQueryRepository = projectQueryRepository;
+    public ProjectQueryController(ProjectQueryService projectQueryService) {
+        this.projectQueryService = projectQueryService;
     }
 
     @RequestMapping("/project")
     @ResponseBody
     public Iterable<ProjectProjection> findAll() {
 
-        return projectQueryRepository.findAll();
+        return projectQueryService.findAll();
     }
 
     @RequestMapping("/project/{id}")
     @ResponseBody
     public ProjectProjection find(@PathVariable("id") String id) {
 
-        return projectQueryRepository.findById(id)
+        return projectQueryService.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 }

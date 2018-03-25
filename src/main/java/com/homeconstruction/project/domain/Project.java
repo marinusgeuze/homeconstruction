@@ -7,6 +7,7 @@ import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
@@ -22,9 +23,14 @@ public class Project {
     @AggregateIdentifier
     private String id;
     private ProjectName name;
-    private Boolean targetReached;
-    private ProjectReachedPercentage targetReachedPercentage;
-    private LocalDate startDate;
+    @Basic(optional=true)
+    private Boolean minimumAmountOfBuyersTargetReached;
+    @Basic(optional=true)
+    private MinimumAmountOfBuyersReachedPercentage minimumAmountOfBuyersReachedPercentage;
+    @Basic(optional=true)
+    private LocalDate minimumAmountOfBuyersTargetReachedDate;
+    @Basic(optional=true)
+    private LocalDate constructionOnSiteStartDate;
 
     @CommandHandler
     public Project(InitiateProject command) {
@@ -42,34 +48,27 @@ public class Project {
     @CommandHandler
     public void handle(ReachProjectTarget command) {
 
-        apply(new ProjectTargetReached(command.getId(), command.getPercentage()));
+        apply(new ProjectTargetReached(command.getId(), command.getPercentage(), command.getReachedDate()));
     }
 
     @EventHandler
     public void on(ProjectTargetReached event) {
 
-        this.targetReached = true;
-        this.targetReachedPercentage = event.getPercentage();
+        this.minimumAmountOfBuyersTargetReached = true;
+        this.minimumAmountOfBuyersReachedPercentage = event.getPercentage();
+        this.minimumAmountOfBuyersTargetReachedDate = event.getReachedDate();
     }
 
     @CommandHandler
-    public void handle(StartProject command) {
+    public void handle(StartConstructionOnSite command) {
 
-        apply(new ProjectStarted(command.getId(), command.getStartDate()));
+        apply(new ConstructionOnSiteStarted(command.getId(), command.getStartDate()));
     }
 
     @EventHandler
-    public void on(ProjectStarted event) {
+    public void on(ConstructionOnSiteStarted event) {
 
-        this.startDate = event.getStartDate();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public ProjectName getName() {
-        return name;
+        this.constructionOnSiteStartDate = event.getStartDate();
     }
 }
 

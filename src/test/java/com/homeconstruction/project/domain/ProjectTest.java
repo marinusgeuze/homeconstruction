@@ -31,10 +31,10 @@ public class ProjectTest {
     @Test
     public void testReachProjectTarget() throws Exception {
 
-        ProjectReachedPercentage projectReachedPercentage = new ProjectReachedPercentage(70);
+        MinimumAmountOfBuyersReachedPercentage minimumAmountOfBuyersReachedPercentage = new MinimumAmountOfBuyersReachedPercentage(70);
         fixture.given(new ProjectInitiated(PROJECT_ID, new ProjectName("Witte Bruggen")))
-                .when(new ReachProjectTarget(PROJECT_ID, projectReachedPercentage))
-                .expectEvents(new ProjectTargetReached(PROJECT_ID, projectReachedPercentage));
+                .when(new ReachProjectTarget(PROJECT_ID, minimumAmountOfBuyersReachedPercentage, LocalDate.now()))
+                .expectEvents(new ProjectTargetReached(PROJECT_ID, minimumAmountOfBuyersReachedPercentage, LocalDate.now()));
     }
 
     @Test
@@ -42,8 +42,8 @@ public class ProjectTest {
 
         LocalDate startDate = LocalDate.now();
         fixture.given(new ProjectInitiated(PROJECT_ID, new ProjectName("Witte Bruggen")),
-                new ProjectTargetReached(PROJECT_ID, new ProjectReachedPercentage(70)))
-                .when(new StartProject(PROJECT_ID, startDate))
-                .expectEvents(new ProjectStarted(PROJECT_ID, startDate));
+                new ProjectTargetReached(PROJECT_ID, new MinimumAmountOfBuyersReachedPercentage(70), LocalDate.now()))
+                .when(new StartConstructionOnSite(PROJECT_ID, startDate))
+                .expectEvents(new ConstructionOnSiteStarted(PROJECT_ID, startDate));
     }
 }

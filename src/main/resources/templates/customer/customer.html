@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Home Construction - Customer</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+    <!--/*@thymesVar id="project" type="com.homeconstruction.project.query.ProjectProjection"*/-->
+    <h1 th:text="${project.name}"/>
+    <div>
+        <span><b>Minimaal aantal kopers bereikt:</b></span>
+        <span th:text="${project.minimumAmountOfBuyersTargetReached}"/>
+    </div>
+    <div>
+        <span><b>Minimaal aantal kopers percentage:</b></span>
+        <span th:text="${project.minimumAmountOfBuyersReachedPercentage}"/>
+    </div>
+    <div>
+        <span><b>Minimaal aantal kopers bereikt op:</b></span>
+        <span th:text="${project.minimumAmountOfBuyersTargetReachedDate}"/>
+    </div>
+    <div>
+        <span><b>Bouw project gestart op:</b></span>
+        <span th:text="${project.constructionOnSiteStartDate}"/>
+    </div>
+    </body>
+</html>

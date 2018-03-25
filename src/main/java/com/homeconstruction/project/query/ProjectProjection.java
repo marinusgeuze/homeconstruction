@@ -1,9 +1,20 @@
 package com.homeconstruction.project.query;
 
-public interface ProjectProjection {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    public String getId();
+import java.time.LocalDate;
 
-    public String getName();
+@NoArgsConstructor
+@Getter
+@Setter
+public class ProjectProjection {
+
+    private String id;
+    private String name;
+    private Boolean minimumAmountOfBuyersTargetReached;
+    private Integer minimumAmountOfBuyersReachedPercentage;
+    private LocalDate minimumAmountOfBuyersTargetReachedDate;
+    private LocalDate constructionOnSiteStartDate;
 }
-
