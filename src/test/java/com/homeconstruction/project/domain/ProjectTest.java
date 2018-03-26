@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class ProjectTest {
 
-    private static final String PROJECT_ID = UUID.randomUUID().toString();
+    private static final ProjectId PROJECT_ID = new ProjectId(UUID.randomUUID().toString());
 
     private AggregateTestFixture<Project> fixture;
 

@@ -2,6 +2,7 @@ package com.homeconstruction.project.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homeconstruction.project.api.InitiateProject;
+import com.homeconstruction.project.api.ProjectId;
 import com.homeconstruction.project.api.ProjectName;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class ProjectCommandControllerTest {
     @Test
     public void initiateProject() throws Exception {
 
-        InitiateProject initiateProject = new InitiateProject("1", new ProjectName("Test 1"));
+        InitiateProject initiateProject = new InitiateProject(new ProjectId("1"), new ProjectName("Test 1"));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
                 "/project")

@@ -21,7 +21,7 @@ public class Project {
 
     @Id
     @AggregateIdentifier
-    private String id;
+    private ProjectId id;
     private ProjectName name;
     @Basic(optional=true)
     private Boolean minimumAmountOfBuyersTargetReached;
