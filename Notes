@@ -10,6 +10,7 @@ docker run -p 3306:3306 --name homeconstruction -e MYSQL_DATABASE=homeconstructi
 TO DO
 =====
 * Customer UI minimale functionele versie afmaken
+* TODO: Fix java time formatting in REST API
 * Command UI
 * Dan KISS toepassen
     //Vraag: voegt kotlin wat toe, of maakt alleen maar moeilijk?
