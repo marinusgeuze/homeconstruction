@@ -1,39 +1,54 @@
 package com.homeconstruction.home.domain;
 
-import com.homeconstruction.project.api.InitiateProject;
-import com.homeconstruction.project.api.ProjectInitiated;
+import com.homeconstruction.home.api.*;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
 @Aggregate(repository = "homeCommandRepository")
 @Entity
 @NoArgsConstructor
 public class Home {
 
-    @Id
+    @EmbeddedId
     @AggregateIdentifier
-    private String id;
+    private HomeId id;
+    //private String homeTypeId;
+    private ProjectNumber projectNumber;
+    private LotSize lotSize;
+    private AreaOfUse areaOfUse;
+    private Price price;
 
     @CommandHandler
-    public Home(InitiateProject command) {
+    public Home(DefineHome command) {
 
-        //apply(new ProjectInitiated(command.getId(), command.getName()));
+        apply(new HomeDefined(command.getId(), command.getProjectNumber(), command.getLotSize(),
+                command.getAreaOfUse(), command.getPrice()));
     }
 
     @EventHandler
-    public void on(ProjectInitiated event) {
+    public void on(HomeDefined event) {
 
         this.id = event.getId();
+        this.projectNumber = event.getProjectNumber();
+        this.lotSize = event.getLotSize();
+        this.areaOfUse = event.getAreaOfUse();
+        this.price = event.getPrice();
     }
+/*
+    @CommandHandler
+    public void handle(ReserveHome command) {
 
-    public String getId() {
-        return id;
+        apply(new HomeReserver(command.getId()));
     }
+*/
 }
 

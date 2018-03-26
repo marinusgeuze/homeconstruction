@@ -6,6 +6,7 @@
     </head>
     <body>
     <!--/*@thymesVar id="project" type="com.homeconstruction.project.query.ProjectProjection"*/-->
+    <!--/*@thymesVar id="home" type="com.homeconstruction.home.query.HomeProjection"*/-->
     <h1 th:text="${project.name}"/>
     <div>
         <span><b>Minimaal aantal kopers bereikt:</b></span>
@@ -22,6 +23,22 @@
     <div>
         <span><b>Bouw project gestart op:</b></span>
         <span th:text="${project.constructionOnSiteStartDate}"/>
+    </div>
+    <div>
+        <span><b>Bouwnummer:</b></span>
+        <span th:text="${home.projectNumber}"/>
+    </div>
+    <div>
+        <span><b>Perceeloppervlak (m2):</b></span>
+        <span th:text="${home.lotSize}"/>
+    </div>
+    <div>
+        <span><b>Gebruiksoppervlak (m2):</b></span>
+        <span th:text="${home.areaOfUse}"/>
+    </div>
+    <div>
+        <span><b>Huis prijs:</b></span>
+        <span th:text="${home.price}"/>
     </div>
     </body>
 </html>

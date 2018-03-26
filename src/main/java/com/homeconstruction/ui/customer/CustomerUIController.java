@@ -1,5 +1,6 @@
 package com.homeconstruction.ui.customer;
 
+import com.homeconstruction.home.query.HomeProjection;
 import com.homeconstruction.project.query.ProjectProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,15 @@ public class CustomerUIController {
     @GetMapping("/ui/customer")
     public String customerUI(Model model) {
 
+        String witte_bruggen = "Witte Bruggen";
+
         ProjectProjection project =
-                customerUIService.findProjectByNameAndHomeNumber("Witte Bruggen", 8);
+                customerUIService.findProjectByName(witte_bruggen);
+        HomeProjection home = customerUIService.findHomeByProjectAndProjectNumber(witte_bruggen, 8);
 
         model.addAttribute("project", project);
+        model.addAttribute("home", home);
+
         return "customer/customer";
     }
 }

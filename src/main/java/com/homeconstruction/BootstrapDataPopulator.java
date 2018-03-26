@@ -1,5 +1,8 @@
 package com.homeconstruction;
 
+import com.homeconstruction.home.api.*;
+import com.homeconstruction.home.command.HomeCommandService;
+import com.homeconstruction.home.query.HomeQueryService;
 import com.homeconstruction.project.api.*;
 import com.homeconstruction.project.command.ProjectCommandService;
 import com.homeconstruction.project.query.ProjectQueryService;
@@ -18,11 +21,19 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
 
     private final Logger LOG = LoggerFactory.getLogger(BootstrapDataPopulator.class);
 
-    @Autowired
-    ProjectCommandService projectCommandService;
+    private final static String WITTE_BRUGGEN = "Witte Bruggen";
 
     @Autowired
-    ProjectQueryService projectQueryService;
+    private ProjectCommandService projectCommandService;
+
+    @Autowired
+    private ProjectQueryService projectQueryService;
+
+    @Autowired
+    private HomeCommandService homeCommandService;
+
+    @Autowired
+    private HomeQueryService homeQueryService;
 
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
@@ -30,25 +41,24 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
         LOG.info("Bootstrapping data...");
 
         initializeProjects();
+        initializeHomes();
 
         LOG.info("...Bootstrapping completed");
     }
 
     private void initializeProjects() {
 
-        String witteBruggen = "Witte Bruggen";
-
-        if(projectQueryService.findByName(witteBruggen).isPresent())
+        if(projectQueryService.findByName(WITTE_BRUGGEN).isPresent())
         {
             return;
         }
 
         LOG.info("... initialize projects");
 
-        String projectId = UUID.randomUUID().toString();
+        ProjectId projectId = new ProjectId(UUID.randomUUID().toString());
 
         InitiateProject initiateProject = new InitiateProject(projectId,
-                new ProjectName(witteBruggen));
+                new ProjectName(WITTE_BRUGGEN));
         projectCommandService.initiateProject(initiateProject);
 
         ReachProjectTarget reachProjectTarget = new ReachProjectTarget(projectId,
@@ -58,5 +68,29 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
         StartConstructionOnSite startConstructionOnSite = new StartConstructionOnSite(projectId,
                 LocalDate.of(2017, 12, 2));
         projectCommandService.startConstructionOnSite(startConstructionOnSite);
+    }
+
+    /*
+        String homeTypeId = UUID.randomUUID().toString();
+        DefineHomeType defineHomeType = new DefineHomeType(homeTypeId, "E", "2 onder 1 kap");
+        homeCommandService.defineHomeType(defineHomeType);
+  */
+
+    private void initializeHomes() {
+
+        int projectNumber = 8;
+
+        if(homeQueryService.findByProjectNumber(WITTE_BRUGGEN, projectNumber).isPresent())
+        {
+            return;
+        }
+
+        LOG.info("... initialize homes");
+
+        HomeId homeId = new HomeId(UUID.randomUUID().toString());
+        //Note: fictional price
+        DefineHome defineHome = new DefineHome(homeId, new ProjectNumber(projectNumber),
+                new LotSize(252), new AreaOfUse(166), new Price(1000000));
+        homeCommandService.defineHome(defineHome);
     }
 }

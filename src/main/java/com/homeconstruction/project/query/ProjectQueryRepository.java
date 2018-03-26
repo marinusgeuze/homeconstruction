@@ -14,7 +14,7 @@ public class ProjectQueryRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    String SELECT_CLAUSE = "SELECT * FROM project";
+    private String SELECT_CLAUSE = "SELECT * FROM project";
 
     Collection<ProjectProjection> findAll() {
 
