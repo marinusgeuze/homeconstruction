@@ -1,7 +1,5 @@
 package com.homeconstruction;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.homeconstruction.home.domain.Home;
 import com.homeconstruction.project.domain.Project;
@@ -48,20 +46,10 @@ public class HomeConstructionApplication {
     public SpringTransactionManager axonTransactionManager(PlatformTransactionManager tx) {
         return new SpringTransactionManager(tx);
     }
-/*
+
     @Bean
     public JavaTimeModule javaTimeModule() {
 
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        return javaTimeModule;
+        return new JavaTimeModule();
     }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper()
-                .registerModule(new Jdk8Module())
-                .registerModule(new JavaTimeModule());
-        return mapper;
-    }
-    */
 }
