@@ -1,5 +1,6 @@
 package com.homeconstruction.project.query;
 
+import com.homeconstruction.project.api.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +72,7 @@ public class ProjectQueryControllerTest {
         project1.setId("1");
         project1.setName("Test 1");
 
-        when(projectQueryService.findById("1")).thenReturn(Optional.of(project1));
+        when(projectQueryService.findById(new ProjectId("1"))).thenReturn(Optional.of(project1));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/project/1");
@@ -85,7 +86,7 @@ public class ProjectQueryControllerTest {
     @Test
     public void findNotFound() throws Exception {
 
-        when(projectQueryService.findById("1")).thenReturn(Optional.empty());
+        when(projectQueryService.findById(new ProjectId("1"))).thenReturn(Optional.empty());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/project/1");

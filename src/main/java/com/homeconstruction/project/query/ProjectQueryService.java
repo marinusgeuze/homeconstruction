@@ -1,5 +1,7 @@
 package com.homeconstruction.project.query;
 
+import com.homeconstruction.project.api.ProjectId;
+import com.homeconstruction.project.api.ProjectName;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,12 +20,12 @@ public class ProjectQueryService {
         return projectQueryRepository.findAll();
     }
 
-    Optional<ProjectProjection> findById(String id) {
+    Optional<ProjectProjection> findById(ProjectId id) {
 
         return projectQueryRepository.findById(id);
     }
 
-    Optional<ProjectProjection> findByName(String name) {
+    public Optional<ProjectProjection> findByName(ProjectName name) {
 
         return projectQueryRepository.findByName(name);
     }

@@ -1,7 +1,9 @@
 package com.homeconstruction.ui.customer;
 
+import com.homeconstruction.home.api.ProjectNumber;
 import com.homeconstruction.home.query.HomeProjection;
 import com.homeconstruction.home.query.HomeQueryService;
+import com.homeconstruction.project.api.ProjectName;
 import com.homeconstruction.project.query.ProjectProjection;
 import com.homeconstruction.project.query.ProjectQueryService;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,13 @@ public class CustomerUIService {
         this.homeQueryService = homeQueryService;
     }
 
-    ProjectProjection findProjectByName(String name) {
+    ProjectProjection findProjectByName(ProjectName name) {
 
         return projectQueryService.findByName(name).orElseThrow(() ->
                 new RuntimeException(String.format("Project with name %s does not exist!", name)));
     }
 
-    HomeProjection findHomeByProjectAndProjectNumber(String projectName, Integer projectNumber) {
+    HomeProjection findHomeByProjectAndProjectNumber(ProjectName projectName, ProjectNumber projectNumber) {
 
         return homeQueryService.findByProjectNumber(projectName, projectNumber).orElseThrow(() ->
                 new RuntimeException(String.format(

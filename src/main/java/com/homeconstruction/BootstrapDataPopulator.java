@@ -21,7 +21,7 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
 
     private final Logger LOG = LoggerFactory.getLogger(BootstrapDataPopulator.class);
 
-    private final static String WITTE_BRUGGEN = "Witte Bruggen";
+    private final static ProjectName WITTE_BRUGGEN = new ProjectName("Witte Bruggen");
 
     @Autowired
     private ProjectCommandService projectCommandService;
@@ -58,7 +58,7 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
         ProjectId projectId = new ProjectId(UUID.randomUUID().toString());
 
         InitiateProject initiateProject = new InitiateProject(projectId,
-                new ProjectName(WITTE_BRUGGEN));
+                WITTE_BRUGGEN);
         projectCommandService.initiateProject(initiateProject);
 
         ReachProjectTarget reachProjectTarget = new ReachProjectTarget(projectId,
@@ -78,7 +78,7 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
 
     private void initializeHomes() {
 
-        int projectNumber = 8;
+        ProjectNumber projectNumber = new ProjectNumber(8);
 
         if(homeQueryService.findByProjectNumber(WITTE_BRUGGEN, projectNumber).isPresent())
         {
@@ -89,7 +89,7 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
 
         HomeId homeId = new HomeId(UUID.randomUUID().toString());
         //Note: fictional price
-        DefineHome defineHome = new DefineHome(homeId, new ProjectNumber(projectNumber),
+        DefineHome defineHome = new DefineHome(homeId, projectNumber,
                 new LotSize(252), new AreaOfUse(166), new Price(1000000));
         homeCommandService.defineHome(defineHome);
     }

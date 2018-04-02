@@ -1,5 +1,7 @@
 package com.homeconstruction.project.query;
 
+import com.homeconstruction.project.api.ProjectId;
+import com.homeconstruction.project.api.ProjectName;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -24,14 +26,14 @@ public class ProjectQueryRepository {
                 new BeanPropertyRowMapper(ProjectProjection.class));
     }
 
-    Optional<ProjectProjection> findById(String id) {
+    Optional<ProjectProjection> findById(ProjectId id) {
 
         return jdbcTemplate.query(SELECT_CLAUSE + " WHERE id = ?",
-                new Object[]{id}, new BeanPropertyRowMapper(ProjectProjection.class)).stream().findFirst();
+                new Object[]{id.getId()}, new BeanPropertyRowMapper(ProjectProjection.class)).stream().findFirst();
     }
 
-    Optional<ProjectProjection> findByName(String name) {
+    Optional<ProjectProjection> findByName(ProjectName name) {
         return jdbcTemplate.query(SELECT_CLAUSE + " WHERE name = ?",
-                new Object[]{name}, new BeanPropertyRowMapper(ProjectProjection.class)).stream().findFirst();
+                new Object[]{name.getName()}, new BeanPropertyRowMapper(ProjectProjection.class)).stream().findFirst();
     }
 }
