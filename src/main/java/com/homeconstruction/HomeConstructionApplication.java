@@ -1,6 +1,5 @@
 package com.homeconstruction;
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.homeconstruction.home.domain.Home;
 import com.homeconstruction.project.domain.Project;
 import org.axonframework.commandhandling.CommandBus;
@@ -43,11 +42,5 @@ public class HomeConstructionApplication {
     @Bean
     public SpringTransactionManager axonTransactionManager(PlatformTransactionManager tx) {
         return new SpringTransactionManager(tx);
-    }
-
-    @Bean
-    public JavaTimeModule javaTimeModule() {
-
-        return new JavaTimeModule();
     }
 }
