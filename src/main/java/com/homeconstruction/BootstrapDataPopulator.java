@@ -55,7 +55,7 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
 
         LOG.info("... initialize projects");
 
-        ProjectId projectId = new ProjectId(UUID.randomUUID().toString());
+        String projectId = UUID.randomUUID().toString();
 
         InitiateProject initiateProject = new InitiateProject(projectId,
                 WITTE_BRUGGEN);
@@ -87,7 +87,8 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
 
         LOG.info("... initialize homes");
 
-        HomeId homeId = new HomeId(UUID.randomUUID().toString());
+        String homeId = UUID.randomUUID().toString();
+
         //Note: fictional price
         DefineHome defineHome = new DefineHome(homeId, projectNumber,
                 new LotSize(252), new AreaOfUse(166), new Price(1000000));

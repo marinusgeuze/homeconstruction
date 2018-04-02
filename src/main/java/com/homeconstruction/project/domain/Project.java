@@ -8,6 +8,7 @@ import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import javax.persistence.Basic;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
@@ -19,17 +20,19 @@ import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 @NoArgsConstructor
 public class Project {
 
+    //@EmbeddedId
     @Id
     @AggregateIdentifier
-    private ProjectId id;
+    private String id;
+    //private ProjectId id;
     private ProjectName name;
-    @Basic(optional=true)
+    @Basic(optional = true)
     private Boolean minimumAmountOfBuyersTargetReached;
-    @Basic(optional=true)
+    @Basic(optional = true)
     private MinimumAmountOfBuyersReachedPercentage minimumAmountOfBuyersReachedPercentage;
-    @Basic(optional=true)
+    @Basic(optional = true)
     private LocalDate minimumAmountOfBuyersTargetReachedDate;
-    @Basic(optional=true)
+    @Basic(optional = true)
     private LocalDate constructionOnSiteStartDate;
 
     @CommandHandler

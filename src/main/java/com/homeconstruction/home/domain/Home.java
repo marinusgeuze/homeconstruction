@@ -18,10 +18,11 @@ import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 @NoArgsConstructor
 public class Home {
 
-    @EmbeddedId
+    //@EmbeddedId
+    @Id
     @AggregateIdentifier
-    private HomeId id;
-    //private String homeTypeId;
+    //private HomeId id;
+    private String id;
     private ProjectNumber projectNumber;
     private LotSize lotSize;
     private AreaOfUse areaOfUse;

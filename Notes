@@ -9,24 +9,25 @@ docker run -p 3306:3306 --name homeconstruction -e MYSQL_DATABASE=homeconstructi
 
 TO DO
 =====
-* Id field does not work for empty db
 * Customer UI minimale functionele versie afmaken
-* TODO: Fix java time formatting in REST API
 * Command UI
 * Dan KISS toepassen
     //Vraag: voegt kotlin wat toe, of maakt alleen maar moeilijk?
 * Review?
+** Resolve all TODO's
+** Add readme which explain domain model + (test) approach
+* Retry to use Value Object as Aggregate Id (fails in Axon code)
 * Optimistic locking
 * Project naam uniek validatie
+* Implement Flyway
 * Create modules voor bounded contexts
 * AggregateRoot versus Aggregate versus Entity versus Value Objects (kijk naar alle DDD types)
 * Asynchrone commandbus versus synchrone commandbus (Unit of Work?)
 * Toon events of aggregate
-* Deploy in cloud mbv Continuous Deployment pipeline
-* Meerdere modules (met duidelijke boundaries)
 * CI
 ** https://about.gitlab.com/
-* CDeploy
+* CDeploy to cloud environment
+** Use docker
 ** Secure configuration management
 ** Rolling Upgrades
 ** https://www.cloudflare.com/

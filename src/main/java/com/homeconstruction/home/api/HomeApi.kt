@@ -9,9 +9,9 @@ import javax.persistence.Embeddable
 
 data class DefineHomeType(@TargetAggregateIdentifier val id: String, val type: HomeType, val description: HomeDescription)
 data class HomeTypeDefined(val id: String, val type: HomeType, val description: HomeDescription)
-data class DefineHome(@TargetAggregateIdentifier val id: HomeId, val projectNumber: ProjectNumber,
+data class DefineHome(@TargetAggregateIdentifier val id: String, val projectNumber: ProjectNumber,
                  val lotSize: LotSize, val areaOfUse: AreaOfUse, val price: Price)
-data class HomeDefined(val id: HomeId, val projectNumber: ProjectNumber, val lotSize: LotSize,
+data class HomeDefined(val id: String, val projectNumber: ProjectNumber, val lotSize: LotSize,
                   val areaOfUse: AreaOfUse, val price: Price)
 
 

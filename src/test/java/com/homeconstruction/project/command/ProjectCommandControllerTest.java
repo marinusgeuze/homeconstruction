@@ -44,7 +44,7 @@ public class ProjectCommandControllerTest {
     @Test
     public void initiateProject() throws Exception {
 
-        InitiateProject initiateProject = new InitiateProject(new ProjectId("1"), new ProjectName("Test 1"));
+        InitiateProject initiateProject = new InitiateProject("1", new ProjectName("Test 1"));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
                 "/project")
