@@ -5,7 +5,6 @@ import com.homeconstruction.project.api.ReachProjectTarget;
 import com.homeconstruction.project.api.StartConstructionOnSite;
 import org.axonframework.commandhandling.callbacks.LoggingCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +13,6 @@ public class ProjectCommandService {
     //TODO: Change this to async implementation
     private final CommandGateway commandGateway;
 
-    @Autowired
     public ProjectCommandService(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
     }

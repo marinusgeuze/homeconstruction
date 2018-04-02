@@ -1,6 +1,5 @@
 package com.homeconstruction.project.query;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -11,10 +10,13 @@ import java.util.Optional;
 @Component
 public class ProjectQueryRepository {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+    private final static String SELECT_CLAUSE = "SELECT * FROM project";
 
-    private String SELECT_CLAUSE = "SELECT * FROM project";
+    private final JdbcTemplate jdbcTemplate;
+
+    ProjectQueryRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     Collection<ProjectProjection> findAll() {
 
@@ -28,7 +30,7 @@ public class ProjectQueryRepository {
                 new Object[]{id}, new BeanPropertyRowMapper(ProjectProjection.class)).stream().findFirst();
     }
 
-    Optional findByName(String name) {
+    Optional<ProjectProjection> findByName(String name) {
         return jdbcTemplate.query(SELECT_CLAUSE + " WHERE name = ?",
                 new Object[]{name}, new BeanPropertyRowMapper(ProjectProjection.class)).stream().findFirst();
     }

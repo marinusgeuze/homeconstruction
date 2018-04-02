@@ -9,6 +9,11 @@ docker run -p 3306:3306 --name homeconstruction -e MYSQL_DATABASE=homeconstructi
 
 TO DO
 =====
+* Remove @EnableWebMvc
+* Use value objecten in query side
+* Add spring-boot-starter-json en remove jsr310
+* Id field does not work for empty db
+* Kotlin, maak van alles data classes
 * Customer UI minimale functionele versie afmaken
 * TODO: Fix java time formatting in REST API
 * Command UI
@@ -23,6 +28,15 @@ TO DO
 * Toon events of aggregate
 * Deploy in cloud mbv Continuous Deployment pipeline
 * Meerdere modules (met duidelijke boundaries)
-* Rolling Upgrades
-* Alles in Kotlin
+* CI
+** https://about.gitlab.com/
+* CDeploy
+** Secure configuration management
+** Rolling Upgrades
+** https://www.cloudflare.com/
+* Implement testing strategy (https://martinfowler.com/articles/practical-test-pyramid.html#UiTests)
+* Static code analysis
+* Exception management
+* DevOps dashboard (incl. metrics)
 * Grafisch overzicht van command > aggregate > event flow (design time en runtime)
+* Alles in Kotlin

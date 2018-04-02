@@ -2,7 +2,6 @@ package com.homeconstruction.ui.customer;
 
 import com.homeconstruction.home.query.HomeProjection;
 import com.homeconstruction.project.query.ProjectProjection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,6 @@ public class CustomerUIController {
 
     private final CustomerUIService customerUIService;
 
-    @Autowired
     public CustomerUIController(CustomerUIService customerUIService) {
         this.customerUIService = customerUIService;
     }

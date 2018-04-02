@@ -1,7 +1,6 @@
 package com.homeconstruction.project.command;
 
 import com.homeconstruction.project.api.InitiateProject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +13,6 @@ public class ProjectCommandController {
 
     private final ProjectCommandService projectCommandService;
 
-    @Autowired
     public ProjectCommandController(ProjectCommandService projectCommandService) {
 
         this.projectCommandService = projectCommandService;
