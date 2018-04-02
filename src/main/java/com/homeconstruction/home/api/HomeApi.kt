@@ -7,28 +7,31 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier
 import java.io.Serializable
 import javax.persistence.Embeddable
 
-data class DefineHomeType(@TargetAggregateIdentifier val id: String, val type: HomeType, val description: HomeDescription)
-data class HomeTypeDefined(val id: String, val type: HomeType, val description: HomeDescription)
-data class DefineHome(@TargetAggregateIdentifier val id: String, val projectNumber: ProjectNumber,
-                 val lotSize: LotSize, val areaOfUse: AreaOfUse, val price: Price)
-data class HomeDefined(val id: String, val projectNumber: ProjectNumber, val lotSize: LotSize,
-                  val areaOfUse: AreaOfUse, val price: Price)
+data class DefineHomeType(@TargetAggregateIdentifier val id: String, val projectId: String, val typeKey: HomeTypeKey, val description: HomeTypeDescription)
+data class HomeTypeDefined(val id: String, val projectId: String, val typeKey: HomeTypeKey, val description: HomeTypeDescription)
+data class DefineHome(@TargetAggregateIdentifier val id: String, val homeTypeId: HomeTypeId, val projectNumber: ProjectNumber,
+                      val lotSize: LotSize, val areaOfUse: AreaOfUse, val price: Price)
+data class HomeDefined(val id: String, val homeTypeId: HomeTypeId, val projectNumber: ProjectNumber, val lotSize: LotSize,
+                       val areaOfUse: AreaOfUse, val price: Price)
 
-
-data class HomeId
+data class HomeTypeId
 constructor(override val id: String) : AggregateId(id), Serializable {
 }
 
 @Embeddable
-data class HomeType
+data class HomeTypeKey
 @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-constructor(@get:JsonValue val homeType: String) {
+constructor(@get:JsonValue val typeKey: String) {
 }
 
 @Embeddable
-data class HomeDescription
+data class HomeTypeDescription
 @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-constructor(@get:JsonValue val homeDescription: String) {
+constructor(@get:JsonValue val description: String) {
+}
+
+data class HomeId
+constructor(override val id: String) : AggregateId(id), Serializable {
 }
 
 @Embeddable

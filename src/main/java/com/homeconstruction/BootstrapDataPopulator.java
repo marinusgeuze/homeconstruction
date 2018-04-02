@@ -2,9 +2,13 @@ package com.homeconstruction;
 
 import com.homeconstruction.home.api.*;
 import com.homeconstruction.home.command.HomeCommandService;
+import com.homeconstruction.home.command.HomeTypeCommandService;
 import com.homeconstruction.home.query.HomeQueryService;
+import com.homeconstruction.home.query.HomeTypeProjection;
+import com.homeconstruction.home.query.HomeTypeQueryService;
 import com.homeconstruction.project.api.*;
 import com.homeconstruction.project.command.ProjectCommandService;
+import com.homeconstruction.project.query.ProjectProjection;
 import com.homeconstruction.project.query.ProjectQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +18,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -30,7 +35,13 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
     private ProjectQueryService projectQueryService;
 
     @Autowired
+    private HomeTypeCommandService homeTypeCommandService;
+
+    @Autowired
     private HomeCommandService homeCommandService;
+
+    @Autowired
+    private HomeTypeQueryService homeTypeQueryService;
 
     @Autowired
     private HomeQueryService homeQueryService;
@@ -40,17 +51,25 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
 
         LOG.info("Bootstrapping data...");
 
-        initializeProjects();
-        initializeHomes();
+        String projectId = initializeProjects();
+        if(projectId != null) {
+
+            String homeTypeId = initializeHomeTypes(projectId);
+
+            if(homeTypeId != null) {
+                initializeHomes(new HomeTypeId(homeTypeId));
+            }
+        }
 
         LOG.info("...Bootstrapping completed");
     }
 
-    private void initializeProjects() {
+    private String initializeProjects() {
 
-        if(projectQueryService.findByName(WITTE_BRUGGEN).isPresent())
+        Optional<ProjectProjection> project = projectQueryService.findByName(WITTE_BRUGGEN);
+        if(project.isPresent())
         {
-            return;
+            return project.get().getId();
         }
 
         LOG.info("... initialize projects");
@@ -68,15 +87,31 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
         StartConstructionOnSite startConstructionOnSite = new StartConstructionOnSite(projectId,
                 LocalDate.of(2017, 12, 2));
         projectCommandService.startConstructionOnSite(startConstructionOnSite);
+
+        return projectId;
     }
 
-    /*
-        String homeTypeId = UUID.randomUUID().toString();
-        DefineHomeType defineHomeType = new DefineHomeType(homeTypeId, "E", "2 onder 1 kap");
-        homeCommandService.defineHomeType(defineHomeType);
-  */
+    private String initializeHomeTypes(String projectId) {
 
-    private void initializeHomes() {
+        HomeTypeKey homeTypeKey = new HomeTypeKey("E");
+
+        Optional<HomeTypeProjection> homeType = homeTypeQueryService.findByHomeType(WITTE_BRUGGEN, homeTypeKey);
+        if(homeType.isPresent())
+        {
+            return homeType.get().getId();
+        }
+
+        LOG.info("... initialize home types");
+
+        String homeTypeId = UUID.randomUUID().toString();
+
+        DefineHomeType defineHomeType = new DefineHomeType(homeTypeId, projectId, homeTypeKey, new HomeTypeDescription("2 onder 1 kap"));
+        homeTypeCommandService.defineHomeType(defineHomeType);
+
+        return homeTypeId;
+    }
+
+    private void initializeHomes(HomeTypeId homeTypeId) {
 
         ProjectNumber projectNumber = new ProjectNumber(8);
 
@@ -90,7 +125,7 @@ public class BootstrapDataPopulator implements ApplicationListener<ApplicationRe
         String homeId = UUID.randomUUID().toString();
 
         //Note: fictional price
-        DefineHome defineHome = new DefineHome(homeId, projectNumber,
+        DefineHome defineHome = new DefineHome(homeId, homeTypeId, projectNumber,
                 new LotSize(252), new AreaOfUse(166), new Price(1000000));
         homeCommandService.defineHome(defineHome);
     }

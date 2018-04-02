@@ -23,6 +23,8 @@ public class Home {
     @AggregateIdentifier
     //private HomeId id;
     private String id;
+    //private HomeTypeId homeTypeId;
+    private String homeTypeId;
     private ProjectNumber projectNumber;
     private LotSize lotSize;
     private AreaOfUse areaOfUse;
@@ -31,7 +33,7 @@ public class Home {
     @CommandHandler
     public Home(DefineHome command) {
 
-        apply(new HomeDefined(command.getId(), command.getProjectNumber(), command.getLotSize(),
+        apply(new HomeDefined(command.getId(), command.getHomeTypeId(), command.getProjectNumber(), command.getLotSize(),
                 command.getAreaOfUse(), command.getPrice()));
     }
 
@@ -39,6 +41,7 @@ public class Home {
     public void on(HomeDefined event) {
 
         this.id = event.getId();
+        this.homeTypeId = event.getHomeTypeId().getId();
         this.projectNumber = event.getProjectNumber();
         this.lotSize = event.getLotSize();
         this.areaOfUse = event.getAreaOfUse();

@@ -5,8 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     </head>
     <body>
-    <!--/*@thymesVar id="project" type="com.homeconstruction.project.query.ProjectProjection"*/-->
-    <!--/*@thymesVar id="home" type="com.homeconstruction.home.query.HomeProjection"*/-->
+    <!--/*@thymesVar id="project" typeKey="com.homeconstruction.project.query.ProjectProjection"*/-->
+    <!--/*@thymesVar id="home" typeKey="com.homeconstruction.home.query.HomeProjection"*/-->
+    <!--/*@thymesVar id="homeType" typeKey="com.homeconstruction.home.query.HomeTypeProjection"*/-->
     <h1 th:text="${project.name}"/>
     <div>
         <span><b>Minimaal aantal kopers bereikt:</b></span>
@@ -23,6 +24,14 @@
     <div>
         <span><b>Bouw project gestart op:</b></span>
         <span th:text="${project.constructionOnSiteStartDate}"/>
+    </div>
+    <div>
+        <span><b>Huistype:</b></span>
+        <span th:text="${homeType.typeKey}"/>
+    </div>
+    <div>
+        <span><b>Huistype omschrijving:</b></span>
+        <span th:text="${homeType.description}"/>
     </div>
     <div>
         <span><b>Bouwnummer:</b></span>

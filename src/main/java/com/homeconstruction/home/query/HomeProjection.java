@@ -10,6 +10,7 @@ import lombok.Setter;
 public class HomeProjection {
 
     private String id;
+    private String homeTypeId;
     private String projectNumber;
     private Integer lotSize;
     private Integer areaOfUse;

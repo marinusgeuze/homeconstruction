@@ -1,6 +1,7 @@
 package com.homeconstruction;
 
 import com.homeconstruction.home.domain.Home;
+import com.homeconstruction.home.domain.HomeType;
 import com.homeconstruction.project.domain.Project;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.model.GenericJpaRepository;
@@ -27,6 +28,11 @@ public class HomeConstructionApplication {
     @Bean
     public Repository<Project> projectCommandRepository(EventBus eventBus) {
         return new GenericJpaRepository<Project>(entityManagerProvider(), Project.class, eventBus);
+    }
+
+    @Bean
+    public Repository<HomeType> homeTypeCommandRepository(EventBus eventBus) {
+        return new GenericJpaRepository<HomeType>(entityManagerProvider(), HomeType.class, eventBus);
     }
 
     @Bean

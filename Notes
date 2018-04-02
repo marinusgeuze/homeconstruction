@@ -11,6 +11,7 @@ TO DO
 =====
 * Customer UI minimale functionele versie afmaken
 * Command UI
+* Add a few validations (e.g. homeTypeKey and project must exist when creating home)
 * Dan KISS toepassen
     //Vraag: voegt kotlin wat toe, of maakt alleen maar moeilijk?
 * Review?
