@@ -10,7 +10,6 @@ docker run -p 3306:3306 --name homeconstruction -e MYSQL_DATABASE=homeconstructi
 TO DO
 =====
 * Id field does not work for empty db
-* Kotlin, maak van alles data classes
 * Customer UI minimale functionele versie afmaken
 * TODO: Fix java time formatting in REST API
 * Command UI
