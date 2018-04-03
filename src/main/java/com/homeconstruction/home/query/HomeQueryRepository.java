@@ -1,5 +1,6 @@
 package com.homeconstruction.home.query;
 
+import com.homeconstruction.buyer.api.BuyerId;
 import com.homeconstruction.home.api.ProjectNumber;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,8 +19,16 @@ public class HomeQueryRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    Optional<HomeProjection> findByHousenumber(ProjectNumber projectNumber) {
+    Optional<HomeProjection> findByProjectNumber(ProjectNumber projectNumber) {
+
         return jdbcTemplate.query(SELECT_CLAUSE + " WHERE project_number = ?",
                 new Object[]{projectNumber.getProjectNumber()}, new BeanPropertyRowMapper(HomeProjection.class)).stream().findFirst();
+    }
+
+    public Optional<HomeProjection> findByBuyerId(BuyerId buyerId) {
+
+        return jdbcTemplate.query(SELECT_CLAUSE + " WHERE buyer_id = ?",
+                new Object[]{buyerId.getId()}, new BeanPropertyRowMapper(HomeProjection.class)).stream().findFirst();
+
     }
 }

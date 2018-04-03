@@ -1,5 +1,6 @@
 package com.homeconstruction.home.query;
 
+import com.homeconstruction.buyer.api.BuyerId;
 import com.homeconstruction.home.api.ProjectNumber;
 import com.homeconstruction.project.api.ProjectName;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class HomeQueryService {
 
     public Optional<HomeProjection> findByProjectNumber(ProjectName projectName, ProjectNumber projectNumber) {
 
-        return homeQueryRepository.findByHousenumber(projectNumber);
+        return homeQueryRepository.findByProjectNumber(projectNumber);
+    }
+
+    public Optional<HomeProjection> findByBuyerId(ProjectName witteBruggen, BuyerId buyerId) {
+
+        return homeQueryRepository.findByBuyerId(buyerId);
     }
 }

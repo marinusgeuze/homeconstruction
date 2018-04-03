@@ -1,5 +1,8 @@
 package com.homeconstruction.ui.customer;
 
+import com.homeconstruction.buyer.api.BuyerId;
+import com.homeconstruction.buyer.query.BuyerProjection;
+import com.homeconstruction.buyer.query.BuyerQueryService;
 import com.homeconstruction.home.api.HomeTypeId;
 import com.homeconstruction.home.api.ProjectNumber;
 import com.homeconstruction.home.query.*;
@@ -14,11 +17,13 @@ public class CustomerUIService {
     private final ProjectQueryService projectQueryService;
     private final HomeTypeQueryService homeTypeQueryService;
     private final HomeQueryService homeQueryService;
+    private final BuyerQueryService buyerQueryService;
 
-    public CustomerUIService(ProjectQueryService projectQueryService, HomeTypeQueryService homeTypeQueryService, HomeQueryService homeQueryService) {
+    public CustomerUIService(ProjectQueryService projectQueryService, HomeTypeQueryService homeTypeQueryService, HomeQueryService homeQueryService, BuyerQueryService buyerQueryService) {
         this.projectQueryService = projectQueryService;
         this.homeTypeQueryService = homeTypeQueryService;
         this.homeQueryService = homeQueryService;
+        this.buyerQueryService = buyerQueryService;
     }
 
     ProjectProjection findProjectByName(ProjectName name) {
@@ -40,5 +45,13 @@ public class CustomerUIService {
                 new RuntimeException(String.format(
                         "Home with project number %s by project with name %s does not exist!",
                         projectNumber.getProjectNumber(), projectName.getName())));
+    }
+
+    BuyerProjection findBuyerById(BuyerId buyerId) {
+
+        return buyerQueryService.findById(buyerId).orElseThrow(() ->
+                new RuntimeException(String.format(
+                        "Buyer with id %s does not exist!",
+                        buyerId.getId())));
     }
 }

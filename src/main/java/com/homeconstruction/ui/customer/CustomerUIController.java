@@ -1,5 +1,7 @@
 package com.homeconstruction.ui.customer;
 
+import com.homeconstruction.buyer.api.BuyerId;
+import com.homeconstruction.buyer.query.BuyerProjection;
 import com.homeconstruction.home.api.HomeTypeId;
 import com.homeconstruction.home.api.ProjectNumber;
 import com.homeconstruction.home.query.HomeProjection;
@@ -29,10 +31,12 @@ public class CustomerUIController {
                 customerUIService.findProjectByName(witte_bruggen);
         HomeProjection home = customerUIService.findHomeByProjectAndProjectNumber(witte_bruggen, projectNumber);
         HomeTypeProjection homeType = customerUIService.findHomeTypeById(new HomeTypeId(home.getHomeTypeId()));
+        BuyerProjection buyer = customerUIService.findBuyerById(new BuyerId(home.getBuyerId()));
 
         model.addAttribute("project", project);
         model.addAttribute("homeType", homeType);
         model.addAttribute("home", home);
+        model.addAttribute("buyer", buyer);
 
         return "customer/customer";
     }

@@ -8,6 +8,7 @@
     <!--/*@thymesVar id="project" typeKey="com.homeconstruction.project.query.ProjectProjection"*/-->
     <!--/*@thymesVar id="home" typeKey="com.homeconstruction.home.query.HomeProjection"*/-->
     <!--/*@thymesVar id="homeType" typeKey="com.homeconstruction.home.query.HomeTypeProjection"*/-->
+    <!--/*@thymesVar id="buyer" typeKey="com.homeconstruction.buyer.query.BuyerProjection"*/-->
     <h1 th:text="${project.name}"/>
     <div>
         <span><b>Minimaal aantal kopers bereikt:</b></span>
@@ -48,6 +49,26 @@
     <div>
         <span><b>Huis prijs:</b></span>
         <span th:text="${home.price}"/>
+    </div>
+    <div>
+        <span><b>Koper:</b></span>
+        <span th:text="${buyer.firstname}"/> <span th:text="${buyer.surname}"/>
+    </div>
+    <div>
+        <span><b>Koper adres:</b></span>
+        <span th:text="${buyer.address}"/>
+    </div>
+    <div>
+        <span><b>Datum reservering:</b></span>
+        <span th:text="${home.reservationDate}"/>
+    </div>
+    <div>
+        <span><b>Datum verkocht:</b></span>
+        <span th:text="${home.soldDate}"/>
+    </div>
+    <div>
+        <span><b>Datum start bouw huis:</b></span>
+        <span th:text="${home.constructionStartDate}"/>
     </div>
     </body>
 </html>

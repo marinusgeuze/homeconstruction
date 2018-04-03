@@ -16,7 +16,7 @@ TO DO
     //Vraag: voegt kotlin wat toe, of maakt alleen maar moeilijk?
 * Review?
 ** Resolve all TODO's
-** Add readme which explain domain model + (test) approach
+** Add readme which explain domain model (simplified, only few validations) + (test) approach
 * Retry to use Value Object as Aggregate Id (fails in Axon code)
 * Optimistic locking
 * Project naam uniek validatie

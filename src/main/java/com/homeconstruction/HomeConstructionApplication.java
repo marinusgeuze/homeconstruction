@@ -1,5 +1,6 @@
 package com.homeconstruction;
 
+import com.homeconstruction.buyer.domain.Buyer;
 import com.homeconstruction.home.domain.Home;
 import com.homeconstruction.home.domain.HomeType;
 import com.homeconstruction.project.domain.Project;
@@ -38,6 +39,11 @@ public class HomeConstructionApplication {
     @Bean
     public Repository<Home> homeCommandRepository(EventBus eventBus) {
         return new GenericJpaRepository<Home>(entityManagerProvider(), Home.class, eventBus);
+    }
+
+    @Bean
+    public Repository<Buyer> buyerCommandRepository(EventBus eventBus) {
+        return new GenericJpaRepository<Buyer>(entityManagerProvider(), Buyer.class, eventBus);
     }
 
     @Bean
